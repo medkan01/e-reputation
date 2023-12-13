@@ -8,14 +8,17 @@ Vous n’avez qu’à exécuter les commandes dans l’ordre normalement.
 
 <aside>
 💡 Il y a beaucoup de `git fetch` et de `git pull`, mais cela est très important pour éviter les conflits.
+  
 </aside>
 
 <aside>
 💡 Pour tous les `pull-request`, c’est Mehdi (moi) qui s’en chargera. Si vous souhaitez quand même savoir comment je fais la fusion avec un `pull-request`, je vous montrerai.
+  
 </aside>
 
 <aside>
 💡 Évitez au maximum de manipuler la branche `main`. Faites tout sur la branche `dev`.
+  
 </aside>
 
 ### Créer une nouvelle fonctionnalité
@@ -31,6 +34,7 @@ git push -u nom-fonctionnalite
 
 <aside>
 💡 En faisant cela, la branche sera créée et directement mise en ligne. Vous n’aurez plus qu’à `git push` dans cette branche pour sauvegarder les modifications.
+  
 </aside>
 
 ### Récupérer les derniers changements de la branche `dev`
@@ -61,6 +65,7 @@ git push
 
 <aside>
 💡 Cette partie peut être utile si vous travaillez à plusieurs sur une même branche.
+  
 </aside>
 
 ```bash
