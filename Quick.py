@@ -22,6 +22,23 @@ def get_all_pages():
     return urls
 
 def parse_comments(url):
+    chemin = "D:/Lorraine/Fichiers/Quick-Review.xlsx"
+    header = ['Enterprise', 'Comments', "Reviews_Date", "Evaluations", "Extraction-Date", "Category", "Source"]
+    
+    # Création d'un classeur s'il n'existe pas et écriture des en-têtes 
+    file_exists = os.path.isfile(chemin)
+    if not file_exists:
+        wb = Workbook()
+        ws = wb.active
+        ws.append(header)
+        wb.save(chemin)
+    else:
+        wb = openpyxl.load_workbook(chemin)
+        ws = wb.active
+        # Supprimer les lignes existantes (sauf la première ligne avec les en-têtes)
+        ws.delete_rows(2, ws.max_row)
+        wb.save(chemin)
+    
     for url in urls:
         request = requests.get(url)
         print(request.status_code)
@@ -40,20 +57,7 @@ def parse_comments(url):
             likes = review.find("span", class_="rating-stars")["data-rating"]
             #print(likes)
 
-            header = ['Enterprise', 'Comments', "Reviews_Date", "Evaluations", "Extraction-Date", "Category", "Source"]
             data = ["Quick", comment, date_review, likes, datetime.today().date(), "Fast food", "Avis-Clients.fr"]
-            chemin = "D:/Lorraine/Fichiers/Quick-Review.xlsx"
-
-            file_exists = openpyxl.workbook.Workbook()
-
-            file_exists = os.path.isfile(chemin)
-
-            # Création d'un classeur s'il n'existe pas et écriture des en-têtes
-            if not file_exists:
-                wb = Workbook()
-                ws = wb.active
-                ws.append(header)
-                wb.save(chemin)
 
             # Écriture des données
             wb = openpyxl.load_workbook(chemin)

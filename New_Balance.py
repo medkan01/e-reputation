@@ -23,11 +23,28 @@ def get_all_pages():
 
 
 def parse_comments(url):
+    chemin = "D:/Lorraine/Fichiers/New_Balance-Review.xlsx"
+    header = ['Enterprise', 'Comments', "Reviews_Date", "Evaluations", "Extraction-Date", "Category", "Source"]
+    # Création d'un classeur s'il n'existe pas et écriture des en-têtes 
+    file_exists = os.path.isfile(chemin)
+    if not file_exists:
+        wb = Workbook()
+        ws = wb.active
+        ws.append(header)
+        wb.save(chemin)
+    else:
+        wb = openpyxl.load_workbook(chemin)
+        ws = wb.active
+        # Supprimer les lignes existantes (sauf la première ligne avec les en-têtes)
+        ws.delete_rows(2, ws.max_row)
+        wb.save(chemin)
+
     for url in urls:
         request = requests.get(url)
         print(request.status_code)
         soup = BeautifulSoup(request.content, "html.parser")
         reviews = soup.find_all('div', class_='styles_reviewCardInner__EwDq2')
+
         for review in reviews:
             
             try:
@@ -41,21 +58,7 @@ def parse_comments(url):
             likes = review.find("img")['alt']
         # print(likes)
 
-            
-            header = ['Enterprise', 'Comments', "Reviews_Date", "Evaluations", "Extraction-Date", "Category", "Source"]
             data = ["New Balance", comment, date_review, likes, datetime.today().date(), "Sportwear", "Trustpilot"]
-
-            chemin = "D:/Lorraine/Fichiers/New_Balance-Review.xlsx"
-
-            # Création d'un classeur s'il n'existe pas et écriture des en-têtes
-            file_exists = os.path.isfile(chemin)
-
-            # Création d'un classeur s'il n'existe pas et écriture des en-têtes
-            if not file_exists:
-                wb = Workbook()
-                ws = wb.active
-                ws.append(header)
-                wb.save(chemin)
 
             # Écriture des données
             wb = openpyxl.load_workbook(chemin)
